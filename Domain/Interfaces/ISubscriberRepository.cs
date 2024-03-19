@@ -9,8 +9,8 @@ namespace Domain.Interfaces
 {
     public interface ISubscriberRepository
     {
-        Task<IEnumerable<Subscribers>> GetAllSubscribersAsync();
-        Task<Subscribers> Addsubscribers(Subscribers subscriber);
-        Task<Subscribers> RemoveSubscriber(Guid subscriber);
+        Task<IEnumerable<Subscriber>> GetAllSubscribersAsync();
+        Task AddSubscriberAsync(Subscriber subscriber);
+        Task RemoveSubscriberAsync(Guid subscriberId);
     }
 }

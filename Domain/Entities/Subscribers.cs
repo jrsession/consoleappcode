@@ -1,9 +1,9 @@
 ﻿namespace Domain.Entities
 {
-    public class Subscribers
+    public class Subscriber
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Email { get; set; }
-        public bool isSubscribed { get; set; }
+        public bool IsSubscribed { get; set; }
     }
 }
