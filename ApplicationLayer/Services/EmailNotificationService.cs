@@ -1,4 +1,5 @@
 ﻿using Domain.Interfaces;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,21 +11,30 @@ namespace ApplicationLayer.Services
     public class EmailNotificationService : INotificationService
     {
         private readonly ISubscriberRepository _subscriberRepository;
-        // Assuming EmailClient is a simplified class to send emails
-        private readonly EmailClient _emailClient;
+        private readonly IConfiguration _configuration;
 
-        public EmailNotificationService(ISubscriberRepository subscriberRepository, EmailClient emailClient)
+        public EmailNotificationService(ISubscriberRepository subscriberRepository, IConfiguration configuration)
         {
             _subscriberRepository = subscriberRepository;
-            _emailClient = emailClient;
+            _configuration = configuration;
+        }
+
+        public EmailNotificationService(ISubscriberRepository subscriberRepository)
+        {
+            _subscriberRepository = subscriberRepository;
+            
         }
 
         public async Task SendNotificationAsync(string subject, string message)
         {
+
+
+            var apiKey = _configuration["SendGrid:ApiKey"];
+
             var subscribers = await _subscriberRepository.GetAllSubscribersAsync();
             foreach (var subscriber in subscribers.Where(s => s.IsSubscribed))
             {
-                _emailClient.Send(subscriber.Email, subject, message); // Simplified send method
+                //_emailClient.Send(subscriber.Email, subject, message); // Simplified send method
             }
         }
     }
